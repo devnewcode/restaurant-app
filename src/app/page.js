@@ -20,7 +20,8 @@ export default function Home() {
   },[])
 
   const loadLocations = async ()=>{
-    let response = await fetch('http://localhost:3000/api/customer/locations');
+    const baseUrl = process.env.NODE_ENV === 'production' ? 'https://restaurant-app-six-orpin.vercel.app/' : 'http://localhost:3000';
+  let response = await fetch(`${baseUrl}/api/customer/locations`);
     response = await response.json();
     if(response.success){
       setLocations(response.result)
@@ -28,7 +29,8 @@ export default function Home() {
 
   }
   const loadRestaurants = async (params)=>{
-    let url = "http://localhost:3000/api/customer";
+    const baseUrl = process.env.NODE_ENV === 'production' ? 'https://restaurant-app-six-orpin.vercel.app/' : 'http://localhost:3000';
+  let url = `${baseUrl}/api/customer`;
     if(params?.location){
       url=url+"?location="+params.location
     }else if(params?.restaurant){
