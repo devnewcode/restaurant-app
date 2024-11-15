@@ -6,7 +6,7 @@ import { DELIVERY_CHARGES, TAX } from "../lib/constant";
 import { useRouter } from "next/navigation";
 
 const Page=()=>{
-    const [userStorage,setUserStorage] = useState(JSON.parse(localStorage.getItem('user')));
+    const [userStorage,setUserStorage] = useState(null);
     // Initialize cartStorage state
     const [cartStorage, setCartStorage] = useState([]);
 
@@ -15,15 +15,20 @@ const Page=()=>{
     
 
     useEffect(() => {
+        const user = JSON.parse(localStorage.getItem('user'));
         // Fetch cart data from localStorage on component mount
         const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        setUserStorage(user);
         setCartStorage(cart);
 
         // Calculate the total price correctly
-        const cartTotal = cart.length === 1 
-            ? cart[0].price 
-            : cart.reduce((acc, item) => acc + item.price, 0);
-        setTotal(cartTotal);
+        // const cartTotal = cart.length === 1 
+        //     ? cart[0].price 
+        //     : cart.reduce((acc, item) => acc + item.price, 0);
+        // setTotal(cartTotal);
+
+        const cartTotal = cart.reduce((acc, item) => acc + item.price, 0);
+setTotal(cartTotal);
     }, []);
 
     const removeFromCart = (itemId) => {
@@ -32,10 +37,13 @@ const Page=()=>{
         localStorage.setItem('cart', JSON.stringify(updatedCart));
 
         // Recalculate the total after removing the item
-        const updatedTotal = updatedCart.length === 1 
-            ? updatedCart[0].price 
-            : updatedCart.reduce((acc, item) => acc + item.price, 0);
-        setTotal(updatedTotal);
+        // const updatedTotal = updatedCart.length === 1 
+        //     ? updatedCart[0].price 
+        //     : updatedCart.reduce((acc, item) => acc + item.price, 0);
+        // setTotal(updatedTotal);
+
+        const updatedTotal = updatedCart.reduce((acc, item) => acc + item.price, 0);
+setTotal(updatedTotal);
     };
 
     const [removeCartData, setRemoveCartData] = useState(false);
@@ -54,10 +62,16 @@ const Page=()=>{
         let foodItemIds = cart.map((item)=>item._id).toString();
         // let resto_id = cart[0].resto_id;
         let city = JSON.parse(localStorage.getItem('user')).city;
-        let deliveryBoyResponse = await fetch('http://localhost:3000/api/deliverypartners/delhi'+city);
+        // let deliveryBoyResponse = await fetch('http://localhost:3000/api/deliverypartners/delhi'+city);
+        if (!userStorage?.city) {
+            alert("City not available");
+            return;
+        }
+        
+        let deliveryBoyResponse = await fetch(`/api/deliverypartners/${userStorage.city}`);
         deliveryBoyResponse = await deliveryBoyResponse.json();
         // console.log(deliveryBoyResponse);
-        deliveryBoyIds = deliveryBoyResponse.result.map((item)=>item._id);
+        // deliveryBoyIds = deliveryBoyResponse.result.map((item)=>item._id);
         
         let deliveryBoyIds = deliveryBoyResponse.result.map((item)=>item.id);
         let deliveryBoy_id = deliveryBoyIds[Math.floor(Math.random()*deliveryBoyIds.length)]
@@ -66,6 +80,11 @@ const Page=()=>{
             alert("delivery partner not available");
         return false;
         }
+
+        if (!userStorage) {
+            return <div>Loading user data...</div>; // Add a loading state
+        }
+
         // let deliveryBoy_id = "6720cced1259f62a485c2b02";
         let collection = {
             user_id,
@@ -75,7 +94,8 @@ const Page=()=>{
             status:'confirm',
             amount: total+DELIVERY_CHARGES+((total*TAX)/100),
         }
-        let response = await fetch('http://localhost:3000/api/order',{
+        // let response = await fetch('http://localhost:3000/api/order'
+        let response = await fetch(`/api/order`,{
             method:'POST',
             headers:{
                 'Content-Type': 'application/json'
@@ -102,15 +122,15 @@ const Page=()=>{
                 <h2>User Details</h2>
                 <div className="row">
                     <span>Name</span>
-                    <span>{userStorage.name}</span>
+                    <span>{userStorage?.name || 'Loading...'}</span>
                 </div>
                 <div className="row">
                     <span>Address</span>
-                    <span>{userStorage.address}</span>
+                    <span>{userStorage?.address || 'Loading...'}</span>
                 </div>
                 <div className="row">
                     <span>Mobile</span>
-                    <span>{userStorage.mobile}</span>
+                    <span>{userStorage?.mobile || 'Loading...'}</span>
                 </div>
                 <h2>Amount Details</h2>
                 <div className="row">
