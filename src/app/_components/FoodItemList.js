@@ -10,18 +10,32 @@ const FoodItemList =()=>{
     useEffect(()=>{
         loadFoodItems();
     },[]);
-    const loadFoodItems=async ()=>{
+    const loadFoodItems = async () => {
         const restaurantData = JSON.parse(localStorage.getItem('restaurantUser'));
-        const resto_id = restaurantData._id;
-        let response = await fetch(`${baseUrl}/api/restaurant/foods/`+resto_id);
-        response =await response.json();
-        // console.log(response);
-        if(response.success){
-            setFoodItems(response.result)
-        }else{
-            alert("food item list not loading")
+        if (!restaurantData) {
+            alert("No restaurant user found in local storage");
+            return;
         }
-    }
+        const resto_id = restaurantData._id;
+        try {
+            let response = await fetch(`${baseUrl}/api/restaurant/foods/${resto_id}`);
+            response = await response.json();
+            if (response.success) {
+                setFoodItems(response.result);
+            } else {
+                alert("Food item list not loading");
+            }
+        } catch (error) {
+            console.error("Error loading food items:", error);
+        }
+    };
+    
+    useEffect(() => {
+        if (typeof window !== "undefined") {
+            loadFoodItems();
+        }
+    }, []);
+    
     const deleteFoodItem = async(id)=>{
         let response = await fetch(`${baseUrl}/api/restaurant/foods/`+id,{
             method:'delete'
