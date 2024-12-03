@@ -14,6 +14,7 @@ const Page = () => {
     const [mobile, setMobile] = useState('');
     const router = useRouter();
 
+    const baseUrl = process.env.NODE_ENV === 'production' ? 'https://restaurant-app-six-orpin.vercel.app/' : 'http://localhost:3000';
 
     useEffect(()=>{
         const delivery = JSON.parse(localStorage.getItem('delivery'));
@@ -22,7 +23,9 @@ const Page = () => {
         }
     },[])
     const loginHandle = async () => {
-        let response = await fetch('http://localhost:3000/api/deliverypartners/login', {
+        // const baseUrl = process.env.NODE_ENV === 'production' ? 'https://restaurant-app-six-orpin.vercel.app/' : 'http://localhost:3000';
+
+        let response = await fetch(`${baseUrl}/api/deliverypartners/login`, {
             method: 'post',
             body: JSON.stringify({ mobile: loginMobile, password: loginPassword })
         })
@@ -39,7 +42,7 @@ const Page = () => {
 
     const handleSignUp = async () => {
         console.log(name, mobile, password, confirmPassword, city, address);
-        let response = await fetch('http://localhost:3000/api/deliverypartners/signup', {
+        let response = await fetch(`${baseUrl}/api/deliverypartners/signup`, {
             method: 'post',
             body: JSON.stringify({ name, mobile, password, city, address })
         })

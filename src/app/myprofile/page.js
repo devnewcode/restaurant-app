@@ -10,7 +10,9 @@ const Page = () =>{
     },[])
     const getMyOrders = async()=>{
         const userStorage = JSON.parse(localStorage.getItem('user'));
-        let response = await fetch('http://localhost:3000/api/order?id=' + userStorage._id);
+        const baseUrl = process.env.NODE_ENV === 'production' ? 'https://restaurant-app-six-orpin.vercel.app/' : 'http://localhost:3000';
+
+        let response = await fetch(`${baseUrl}/api/order?id=` + userStorage._id);
         response = await response.json();
         if(response.success){
             setMyOrders(response.result)

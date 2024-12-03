@@ -4,6 +4,8 @@ import DeliveryHeader from "../DeliveryHeader";
 import { useRouter } from "next/navigation";
 
 const Page=()=>{
+    const baseUrl = process.env.NODE_ENV === 'production' ? 'https://restaurant-app-six-orpin.vercel.app/' : 'http://localhost:3000';
+
     const router = useRouter();
     useEffect(()=>{
         const delivery = JSON.parse(localStorage.getItem('delivery'));
@@ -17,7 +19,7 @@ const Page=()=>{
     },[])
     const getMyOrders = async()=>{
         const deliveryData = JSON.parse(localStorage.getItem('delivery'));
-        let response = await fetch('http://localhost:3000/api/deliverypartners/orders/' + deliveryData._id);
+        let response = await fetch(`${baseUrl}/api/deliverypartners/orders/` + deliveryData._id);
         response = await response.json();
         if(response.success){
             setMyOrders(response.result)

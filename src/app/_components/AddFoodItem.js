@@ -9,6 +9,8 @@ const AddFoodItems=(props)=>{
 
 
     const handleAddFoodItem=async ()=>{
+    const baseUrl = process.env.NODE_ENV === 'production' ? 'https://restaurant-app-six-orpin.vercel.app/' : 'http://localhost:3000';
+
         console.log(name,price,path,description);
         if(!name || !price || !path || !description){
             setError(true);
@@ -21,7 +23,7 @@ const AddFoodItems=(props)=>{
         if(restaurantData){
             resto_id = restaurantData._id;
         }
-        let response = await fetch("http://localhost:3000/api/restaurant/foods", {
+        let response = await fetch(`${baseUrl}/api/restaurant/foods`, {
             method: "POST",
             body: JSON.stringify({name,price,img_path:path, description, resto_id})
         });

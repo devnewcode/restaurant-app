@@ -15,7 +15,9 @@ const EditFoodItems=(props)=>{
         handleLoadFoodItem();
     },[])
     const handleLoadFoodItem=async()=>{
-        let response = await fetch("http://localhost:3000/api/restaurant/foods/edit/" + props.params.id)
+        const baseUrl = process.env.NODE_ENV === 'production' ? 'https://restaurant-app-six-orpin.vercel.app/' : 'http://localhost:3000';
+
+        let response = await fetch(`${baseUrl}/api/restaurant/foods/edit/` + props.params.id)
         response = await response.json();
         if(response.success){
             console.log(response.result);
@@ -36,7 +38,8 @@ const EditFoodItems=(props)=>{
         }else{
             setError(false);
         }
-        let response = await fetch("http://localhost:3000/api/restaurant/foods/edit/" + props.params.id,{
+        const baseUrl = process.env.NODE_ENV === 'production' ? 'https://restaurant-app-six-orpin.vercel.app/' : 'http://localhost:3000';
+        let response = await fetch(`${baseUrl}/api/restaurant/foods/edit/` + props.params.id,{
             method:'PUT',
             body:JSON.stringify({name,price,img_path:path,description})
         });

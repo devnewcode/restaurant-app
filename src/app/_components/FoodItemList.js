@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 
 
 const FoodItemList =()=>{
+    const baseUrl = process.env.NODE_ENV === 'production' ? 'https://restaurant-app-six-orpin.vercel.app/' : 'http://localhost:3000';
+
     const [foodItems, setFoodItems] = useState([]);
     const router = useRouter();
     useEffect(()=>{
@@ -11,7 +13,7 @@ const FoodItemList =()=>{
     const loadFoodItems=async ()=>{
         const restaurantData = JSON.parse(localStorage.getItem('restaurantUser'));
         const resto_id = restaurantData._id;
-        let response = await fetch("http://localhost:3000/api/restaurant/foods/"+resto_id);
+        let response = await fetch(`${baseUrl}/api/restaurant/foods/`+resto_id);
         response =await response.json();
         // console.log(response);
         if(response.success){
@@ -21,7 +23,7 @@ const FoodItemList =()=>{
         }
     }
     const deleteFoodItem = async(id)=>{
-        let response = await fetch("http://localhost:3000/api/restaurant/foods/"+id,{
+        let response = await fetch(`${baseUrl}/api/restaurant/foods/`+id,{
             method:'delete'
         });
         response = await response.json();

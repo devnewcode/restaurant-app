@@ -13,8 +13,10 @@ const UserSignUp = (props) => {
 
 
     const handleSignUp=async()=>{
+    const baseUrl = process.env.NODE_ENV === 'production' ? 'https://restaurant-app-six-orpin.vercel.app/' : 'http://localhost:3000';
+
         console.log(name,email,password,confirmPassword,city,address,mobile);
-        let response = await fetch('http://localhost:3000/api/user',{
+        let response = await fetch(`${baseUrl}/api/user`,{
             method: 'post',
             body: JSON.stringify({name,email,password,city,address,mobile})
         })

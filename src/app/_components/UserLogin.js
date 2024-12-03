@@ -2,11 +2,14 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const UserLogin=(props)=>{
+    const baseUrl = process.env.NODE_ENV === 'production' ? 'https://restaurant-app-six-orpin.vercel.app/' : 'http://localhost:3000';
+
     const [email,setEmail]= useState('');
     const [password,setPassword] = useState('');
     const router = useRouter();
     const loginHandle=async()=>{
-        let response = await fetch('http://localhost:3000/api/user/login',{
+
+        let response = await fetch(`${baseUrl}/api/user/login`,{
             method: 'post',
             body: JSON.stringify({email,password})
         })
