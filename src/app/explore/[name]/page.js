@@ -1,71 +1,58 @@
-'use client'
+'use client';
 import CustomerHeader from "@/app/_components/CustomerHeader";
 import Footer from "@/app/_components/Footer";
 import { useEffect, useState } from "react";
 
 const Page = (props) => {
-    const name = props.params.name
-    const [restaurantDetails,setRestaurantDetails] = useState();
-    const [foodItems,setFoodItems] = useState([]);
+    const name = props.params.name;
+    const [restaurantDetails, setRestaurantDetails] = useState();
+    const [foodItems, setFoodItems] = useState([]);
     const [cartData, setCartData] = useState();
-    const [cartStorage , setCartStorage] = useState(JSON.parse(localStorage.getItem('cart')) || []);
-    const [cartIds, setCartIds] = useState(()=>cartStorage.map((item)=>item._id))
+    const [cartStorage, setCartStorage] = useState([]);
+    const [cartIds, setCartIds] = useState([]);
+    const [removeCartData, setRemoveCartData] = useState();
 
-    const [removeCartData,setRemoveCartData] = useState();
+    // Directly using the Vercel production URL
+    const baseUrl = process.env.NODE_ENV === 'production' ? 'https://restaurant-app-six-orpin.vercel.app/' : 'http://localhost:3000';
 
-    //previous code
-    // useEffect(()=>{
-    //     loadRestaurantDetails();
-
-    // },[]);
 
     useEffect(() => {
-        const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
-        setCartStorage(storedCart);
-        setCartIds(storedCart.map(item => item._id));
+        // Ensure this runs only on the client-side
+        if (typeof window !== "undefined") {
+            const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
+            setCartStorage(storedCart);
+            setCartIds(storedCart.map(item => item._id));
+        }
         loadRestaurantDetails();
-    }, []);
-    console.log(cartIds);
-    const loadRestaurantDetails=async()=>{
+    }, []); // Empty dependency array ensures it only runs once when component mounts
+
+    const loadRestaurantDetails = async () => {
         const id = props.searchParams.id;
-        // console.log(id);
-        let response = await fetch("http://localhost:3000/api/customer/"+id)
+        let response = await fetch(`${baseUrl}/api/customer/${id}`);
         response = await response.json();
-        if(response.success){
+        if (response.success) {
             setRestaurantDetails(response.details);
             setFoodItems(response.foodItems);
         }
-    }
-    const addToCart=(item)=>{
-        //previous code
-        // setCartData(item)
-        // let localCartIds = cartIds;
-        // localCartIds.push(item._id);
-        // setCartIds(localCartIds);
-        // setRemoveCartData();
+    };
 
+    const addToCart = (item) => {
         setCartData(item);
         let localCartIds = [...cartIds, item._id];
         setCartIds(localCartIds);
         setRemoveCartData(null);
+    };
 
-    }
-    const removeFromCart=(id)=>{
-        //previous code
-        // setRemoveCartData(id);
-        // var localIds = cartIds.filter(item=>item!=id)
-        // setCartData(localIds)
-        // setCartIds();
-
+    const removeFromCart = (id) => {
         setRemoveCartData(id);
         let localIds = cartIds.filter(item => item !== id);
         setCartIds(localIds);
         setCartData(null);
+    };
 
-    }
     return (
         <div>
-        <CustomerHeader cartData = {cartData} removeCartData={removeCartData}/>
+            <CustomerHeader cartData={cartData} removeCartData={removeCartData} />
             <div className="restaurant-page-banner">
                 <h1>{decodeURI(name)}</h1>
             </div>
@@ -77,31 +64,27 @@ const Page = (props) => {
             </div>
             <div className="food-item-wrapper">
                 {
-                    foodItems.length>0 ? foodItems.map((item)=>(
-                        <div className="list-item">
-                        <img style={{width:100}} src={item.img_path} />
-                        <div>
-                        <div>{item.name}</div>
-                            <div>{item.price}</div>
-                            <div className="description">{item.description}</div>
-                            {
-                                cartIds.includes(item._id)? 
-                                <button onClick={()=>removeFromCart(item._id)}>Remove from cart</button> :
-                                <button onClick={()=>addToCart(item)}>Add to cart</button>
-                            }
-                            
-                            
+                    foodItems.length > 0 ? foodItems.map((item) => (
+                        <div className="list-item" key={item._id}>
+                            <img style={{ width: 100 }} src={item.img_path} alt={item.name} />
+                            <div>
+                                <div>{item.name}</div>
+                                <div>{item.price}</div>
+                                <div className="description">{item.description}</div>
+                                {
+                                    cartIds.includes(item._id) ?
+                                        <button onClick={() => removeFromCart(item._id)}>Remove from cart</button> :
+                                        <button onClick={() => addToCart(item)}>Add to cart</button>
+                                }
+                            </div>
                         </div>
-                            
-                            
-
-                        </div>
-                    ))
-                    : <h1>No food items added for now</h1>
+                    )) :
+                        <h1>No food items added for now</h1>
                 }
             </div>
             <Footer />
         </div>
-    )
+    );
 }
+
 export default Page;

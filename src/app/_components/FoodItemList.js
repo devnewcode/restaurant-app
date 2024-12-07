@@ -1,17 +1,18 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-
-const FoodItemList =()=>{
-    const baseUrl = process.env.NODE_ENV === 'production' ? 'https://restaurant-app-six-orpin.vercel.app/' : 'http://localhost:3000';
+const FoodItemList = () => {
+    const baseUrl = process.env.NODE_ENV === 'production' 
+        ? 'https://restaurant-app-six-orpin.vercel.app' 
+        : 'http://localhost:3000';
 
     const [foodItems, setFoodItems] = useState([]);
     const router = useRouter();
+
     useEffect(() => {
-        if (typeof window !== "undefined") {
-            loadFoodItems(); // Ensure it runs only in the client
-        }
-    }, []);
+        loadFoodItems(); // Runs only once on component mount
+    }, []); // Empty dependency array ensures it only runs on mount
+
     const loadFoodItems = async () => {
         const restaurantData = JSON.parse(localStorage.getItem('restaurantUser'));
         if (!restaurantData) {
@@ -20,7 +21,8 @@ const FoodItemList =()=>{
         }
         const resto_id = restaurantData._id;
         try {
-            let response = await fetch(`/api/restaurant/foods/${resto_id}`);
+            // Use baseUrl to ensure consistency across environments
+            let response = await fetch(`${baseUrl}/api/restaurant/foods/${resto_id}`);
             response = await response.json();
             if (response.success) {
                 setFoodItems(response.result);
@@ -31,24 +33,23 @@ const FoodItemList =()=>{
             console.error("Error loading food items:", error);
         }
     };
-    
-    useEffect(() => {
-        if (typeof window !== "undefined") {
-            loadFoodItems();
+
+    const deleteFoodItem = async (id) => {
+        try {
+            let response = await fetch(`${baseUrl}/api/restaurant/foods/${id}`, {
+                method: 'DELETE',
+            });
+            response = await response.json();
+            if (response.success) {
+                loadFoodItems(); // Reload food items after successful deletion
+            } else {
+                alert("Food item not deleted");
+            }
+        } catch (error) {
+            console.error("Error deleting food item:", error);
         }
-    }, []);
-    
-    const deleteFoodItem = async(id)=>{
-        let response = await fetch(`${baseUrl}/api/restaurant/foods/`+id,{
-            method:'delete'
-        });
-        response = await response.json();
-        if(response.success){
-            loadFoodItems();
-        }else {
-            alert("food item not deleted")
-        }
-    }
+    };
+
     return (
         <div>
             <h1>Food Items</h1>
@@ -64,22 +65,25 @@ const FoodItemList =()=>{
                     </tr>
                 </thead>
                 <tbody>
-                {
-                    foodItems.map((item,key)=>(
-                        <tr key={key}>
-                        <td>{key+1}</td>
-                        <td>{item.name}</td>
-                        <td>{item.price}</td>
-                        <td>{item.description}</td>
-                        <td><img src={item.img_path} /></td>
-                        <td><button onClick={()=>deleteFoodItem(item._id)}>Delete</button><button onClick={()=>router.push('dashboard/' + item._id)}>edit</button></td>
-                    </tr>
-                    ))
-                }
-                
+                    {
+                        foodItems.map((item, key) => (
+                            <tr key={key}>
+                                <td>{key + 1}</td>
+                                <td>{item.name}</td>
+                                <td>{item.price}</td>
+                                <td>{item.description}</td>
+                                <td><img src={item.img_path} alt={item.name} style={{ width: '50px', height: '50px' }} /></td>
+                                <td>
+                                    <button onClick={() => deleteFoodItem(item._id)}>Delete</button>
+                                    <button onClick={() => router.push(`/dashboard/${item._id}`)}>Edit</button>
+                                </td>
+                            </tr>
+                        ))
+                    }
                 </tbody>
             </table>
         </div>
-    )
-}
+    );
+};
+
 export default FoodItemList;
