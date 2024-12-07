@@ -32,7 +32,7 @@ const RestaurantSignUp = () =>{
         }
         // return false;
         console.log(email,password,c_password,name,city,address,contact);
-        let response = await fetch(`{$baseUrl}/api/restaurant`,{
+        let response = await fetch(`${baseUrl}/api/restaurant`,{
             method:"POST",
             body:JSON.stringify({email,password,name,city,address,contact})
         })
