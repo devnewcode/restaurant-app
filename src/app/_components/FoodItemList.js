@@ -7,9 +7,11 @@ const FoodItemList =()=>{
 
     const [foodItems, setFoodItems] = useState([]);
     const router = useRouter();
-    useEffect(()=>{
-        loadFoodItems();
-    },[]);
+    useEffect(() => {
+        if (typeof window !== "undefined") {
+            loadFoodItems(); // Ensure it runs only in the client
+        }
+    }, []);
     const loadFoodItems = async () => {
         const restaurantData = JSON.parse(localStorage.getItem('restaurantUser'));
         if (!restaurantData) {
@@ -18,7 +20,7 @@ const FoodItemList =()=>{
         }
         const resto_id = restaurantData._id;
         try {
-            let response = await fetch(`${baseUrl}/api/restaurant/foods/${resto_id}`);
+            let response = await fetch(`/api/restaurant/foods/${resto_id}`);
             response = await response.json();
             if (response.success) {
                 setFoodItems(response.result);
