@@ -107,7 +107,7 @@ const CustomerHeader = (props) => {
     return (
         <div className="header-wrapper">
             <div className="logo">
-                <img style={{ width: 100 }} src="/logo.png" alt="logo" />
+                <img style={{ width: 100 }} src="/logo2.png" alt="logo" />
 
             </div>
             <ul>
@@ -138,9 +138,9 @@ const CustomerHeader = (props) => {
                 <li>
                     <Link href="/restaurant" >Add Restraunt</Link>
                 </li>
-                <li>
+                {/* <li>
                     <Link href="/deliverypartner" >Delivery Partner</Link>
-                </li>
+                </li> */}
             </ul>
         </div>
     )
