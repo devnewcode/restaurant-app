@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-
+import "./styleforcs.css";
 const CustomerHeader = (props) => {
     // console.log(props);
 

@@ -32,61 +32,63 @@ const Page = () => {
     };
 
     const orderNow = async () => {
-        if (!userStorage?.city) {
-            alert("City not available in user details");
-            return;
-        }
+        // if (!userStorage?.city) {
+        //     alert("City not available in user details");
+        //     return;
+        // }
 
-        const user_id = userStorage._id;
-        const cart = cartStorage;
-        const resto_id = cart.length > 0 ? cart[0].resto_id : null;
+        // const user_id = userStorage._id;
+        // const cart = cartStorage;
+        // const resto_id = cart.length > 0 ? cart[0].resto_id : null;
 
-        if (!resto_id) {
-            alert("No restaurant ID found in the cart");
-            return;
-        }
+        // if (!resto_id) {
+        //     alert("No restaurant ID found in the cart");
+        //     return;
+        // }
 
-        const foodItemIds = cart.map((item) => item._id).toString();
-        const deliveryPartnerResponse = await fetch(
-            `https://restaurant-app-six-orpin.vercel.app/api/deliverypartners/${userStorage.city}`
-        );
+        // const foodItemIds = cart.map((item) => item._id).toString();
+        // const deliveryPartnerResponse = await fetch(
+        //     `https://restaurant-app-six-orpin.vercel.app/api/deliverypartners/${userStorage.city}`
+        // );
 
-        const deliveryData = await deliveryPartnerResponse.json();
-        const deliveryBoyIds = deliveryData.result.map((item) => item.id);
-        const deliveryBoy_id = deliveryBoyIds[Math.floor(Math.random() * deliveryBoyIds.length)];
+        // const deliveryData = await deliveryPartnerResponse.json();
+        // const deliveryBoyIds = deliveryData.result.map((item) => item.id);
+        // const deliveryBoy_id = deliveryBoyIds[Math.floor(Math.random() * deliveryBoyIds.length)];
 
-        if (!deliveryBoy_id) {
-            alert("No delivery partner available");
-            return;
-        }
+        // if (!deliveryBoy_id) {
+        //     alert("No delivery partner available");
+        //     return;
+        // }
 
-        const orderDetails = {
-            user_id,
-            resto_id,
-            foodItemIds,
-            deliveryBoy_id,
-            status: 'confirm',
-            amount: total + DELIVERY_CHARGES + ((total * TAX) / 100),
-        };
+        // const orderDetails = {
+        //     user_id,
+        //     resto_id,
+        //     foodItemIds,
+        //     deliveryBoy_id,
+        //     status: 'confirm',
+        //     amount: total + DELIVERY_CHARGES + ((total * TAX) / 100),
+        // };
 
-        const orderResponse = await fetch(`https://restaurant-app-six-orpin.vercel.app/api/order`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(orderDetails),
-        });
+        // const orderResponse = await fetch(`https://restaurant-app-six-orpin.vercel.app/api/order`, {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //     },
+        //     body: JSON.stringify(orderDetails),
+        // });
 
-        const orderData = await orderResponse.json();
+        // const orderData = await orderResponse.json();
 
-        if (orderData.success) {
-            alert("Order placed successfully!");
-            setRemoveCartData(true);
-            localStorage.removeItem('cart');
-            router.push('/myprofile');
-        } else {
-            alert("Order placement failed. Please try again.");
-        }
+        // if (orderData.success) {
+        //     alert("Order placed successfully!");
+        //     setRemoveCartData(true);
+        //     localStorage.removeItem('cart');
+        //     router.push('/myprofile');
+        // } else {
+        //     alert("Order placement failed. Please try again.");
+        // }
+
+        router.push('/success');
     };
 
     return (

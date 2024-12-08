@@ -1,0 +1,239 @@
+/* Overall Page Background Gradient */
+.dashboard {
+    background: linear-gradient(to right, #ff7a4f, #ffaf50); /* Warm gradient to match restaurant box colors */
+    min-height: 100vh; /* Ensure the gradient covers the entire page */
+    padding-bottom: 50px; /* Space at the bottom */
+  }
+  
+  /* Dashboard Container Styling */
+  .dashboard .main-page-banner {
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.7); /* Light transparent background */
+    padding: 30px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    background: linear-gradient(to right, #ff7a4f, #ffaf50); /* Match the page gradient */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .dashboard .main-page-banner h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #fff; /* White text on gradient */
+    margin-bottom: 10px;
+  }
+  
+  /* Input Wrappers Styling */
+  .dashboard .input-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 15px;
+    flex-wrap: wrap; /* Allow wrapping of elements */
+    width: 100%; /* Ensure full width for mobile */
+  }
+  
+  .dashboard .select-input, .dashboard .search-input {
+    padding: 12px;
+    border: 1px solid white; /* Match the theme color */
+    border-radius: 6px;
+    font-size: 1rem;
+    width: 250px; /* Default width */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s ease;
+  }
+  
+  .dashboard .select-input:focus, .dashboard .search-input:focus {
+    border-color: white; /* Focused state */
+    outline: none;
+  }
+  
+  .dashboard .select-input, .dashboard .search-input {
+    width: 100%; /* Full width on small screens */
+    max-width: 300px; /* Maximum width */
+    margin: 0 auto; /* Center align the input */
+  }
+  
+  .dashboard .select-input {
+    background: rgba(255, 255, 255, 0.8); /* Slightly transparent white for inputs */
+  }
+  
+  /* Dropdown List Styling */
+  .dashboard .location-list {
+    position: absolute;
+    background-color: rgb(247, 220, 199);
+    /* border: 1px solid #ccc; */
+    border-radius: 6px;
+    /* max-height: 200px;
+    overflow-y: auto;
+    margin-top: 5px;
+    z-index: 1000;
+    width: 250px;*/
+  }
+  
+  .dashboard .location-list li {
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .dashboard .location-list li:hover {
+    background-color: #ff6600;
+    color: white;
+  }
+  
+  /* Restaurant List Container */
+  .dashboard .restaurant-list-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Adjust for mobile screens */
+    gap: 20px;
+    padding: 20px;
+     /* Ensure the container takes full width */
+    margin: 0 auto; /* Center the grid */
+  }
+  
+  .dashboard .restaurant-wrapper {
+    background-color: #ffaf50; /* Warm orange tone */
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+  }
+  
+  .dashboard .restaurant-wrapper:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+  }
+  
+  .dashboard .heading-wrapper h3 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .dashboard .heading-wrapper h5 {
+    font-size: 1rem;
+    color: #444;
+  }
+  
+  .dashboard .address-wrapper {
+    margin-top: 10px;
+    font-size: 0.9rem;
+    color: #333;
+  }
+  
+  .dashboard .address-wrapper .address {
+    font-weight: bold;
+    display: block;
+    margin-top: 5px;
+  }
+  
+  /* Responsive Design */
+  
+  /* For tablets and smaller devices */
+  @media (max-width: 1024px) {
+    .dashboard .main-page-banner h1 {
+      font-size: 1.8rem;
+    }
+  
+    .dashboard .input-wrapper {
+      flex-direction: column;
+      gap: 10px;
+    }
+  
+    .dashboard .restaurant-list-container {
+      grid-template-columns: repeat(2, 1fr); /* Two columns layout */
+    }
+  
+    .dashboard .restaurant-wrapper {
+      padding: 15px;
+    }
+  
+    .dashboard .heading-wrapper h3 {
+      font-size: 1.3rem;
+    }
+  
+    .dashboard .address-wrapper {
+      font-size: 1rem;
+    }
+  }
+  
+  /* For mobile devices */
+  @media (max-width: 768px) {
+    .dashboard .main-page-banner {
+      padding: 15px;
+    }
+  
+    .dashboard .main-page-banner h1 {
+      font-size: 1.5rem;
+    }
+  
+    .dashboard .input-wrapper {
+      flex-direction: column;
+      gap: 8px;
+      width: 100%; /* Ensures the search input fills the screen */
+    }
+  
+    .dashboard .select-input, .dashboard .search-input {
+      width: 100%; /* Full width for inputs */
+      padding: 12px;
+      margin: 0 auto; /* Center-align the input */
+      max-width: 90vh; /* Ensure no overflow */
+    }
+  
+    .dashboard .restaurant-list-container {
+      grid-template-columns: 1fr; /* Single column layout for mobile */
+      width: 100%;
+      padding: 10px;
+    }
+  
+    .dashboard .restaurant-wrapper {
+      padding: 12px;
+      width: 90vh;
+      margin-bottom: 10px; /* Reduced margin to prevent excess space between cards */
+    }
+  
+    .dashboard .heading-wrapper h3 {
+      font-size: 1.2rem;
+    }
+  
+    .dashboard .address-wrapper {
+      font-size: 0.9rem;
+    }
+  }
+  
+  /* For very small screens like small phones */
+  @media (max-width: 480px) {
+    .dashboard .main-page-banner {
+      padding: 10px;
+    }
+  
+    .dashboard .main-page-banner h1 {
+      font-size: 1.3rem;
+    }
+  
+    .dashboard .input-wrapper {
+      flex-direction: column;
+      gap: 8px;
+    }
+  
+    .dashboard .select-input, .dashboard .search-input {
+      width: 100%;
+      padding: 10px;
+    }
+  
+    .dashboard .restaurant-wrapper {
+      padding: 10px;
+      margin-bottom: 10px; /* Adjust margin for smaller screens */
+    }
+  
+    .dashboard .heading-wrapper h3 {
+      font-size: 1rem;
+    }
+  
+    .dashboard .address-wrapper {
+      font-size: 0.8rem;
+    }
+  }
+  

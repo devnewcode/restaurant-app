@@ -80,15 +80,15 @@ table img {
   color: rgb(232, 125, 25);
   text-align: center;
 }
-.input-wrapper{
+/* .input-wrapper{
   background-color: #fff;
   padding: 5px;
   border: 1px solid #ccc;
   border-radius: 4px;
   margin: auto;
   width: 60%;
-}
-.select-input{
+} */
+/* .select-input{
   height: 40px;
   border: none;
   width: 25%;
@@ -100,8 +100,8 @@ table img {
   width: 45%;
   border-left: 1px solid #ccc;
   padding-left: 15px;
-}
-.location-list{
+} */
+/* .location-list{
   color: #000;
   list-style-type: none;
   text-align: center;
@@ -111,21 +111,21 @@ table img {
   margin: 0;
   margin-left: -5px;
   border: 1px solid #ccc;
-}
-.location-list li{
+} */
+/* .location-list li{
   width: 180px;
   padding: 5px;
   border-bottom: 1px soild #ccc;
   cursor: pointer;
-}
-.restaurant-list-container{
+} */
+/* .restaurant-list-container{
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   margin-top: 40px;
   margin-bottom: 50px;
-}
-.restaurant-wrapper{
+} */
+/* .restaurant-wrapper{
   width: 45%;
   background-color: orange;
   margin: 10px;
@@ -133,7 +133,7 @@ table img {
   border: 1px solid #aaa;
   border-radius: 5px;
   cursor: pointer;
-}
+} */
 .restaurant-wrapper .heading-wrapper .restaurant-wrapper .address-wrapper{
   padding-left: 15px;
   display: flex;

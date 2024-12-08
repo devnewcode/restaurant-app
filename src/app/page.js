@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import styles from "./page.module.css";
+import "./dashboard.css";
 import CustomerHeader from "./_components/CustomerHeader";
 import Footer from "./_components/Footer";
 import { useEffect, useReducer, useState } from "react";
@@ -51,7 +52,7 @@ export default function Home() {
   }
   console.log(restaurants)
   return (
-    <main >
+    <main className="dashboard">
     <CustomerHeader />
     <div className="main-page-banner">
     <h1>Food delivery app</h1>
@@ -66,8 +67,8 @@ export default function Home() {
           ))
         }
       </ul>
-      <input type="text" className="search-input" 
-      onChange={(event)=>loadRestaurants({restaurant:event.target.value})} placeholder="enter food or restaurant name" />
+      {/* <input type="text" className="search-input" 
+      onChange={(event)=>loadRestaurants({restaurant:event.target.value})} placeholder="enter food or restaurant name" /> */}
 
     </div>
     </div>
