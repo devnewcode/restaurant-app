@@ -2,6 +2,7 @@
 .dashboard {
     background: linear-gradient(to right, #ff7a4f, #ffaf50); /* Warm gradient to match restaurant box colors */
     min-height: 100vh; /* Ensure the gradient covers the entire page */
+    min-width: 100vw;
     padding-bottom: 50px; /* Space at the bottom */
   }
   
@@ -176,7 +177,7 @@
     }
   
     .dashboard .select-input, .dashboard .search-input {
-      width: 100%; /* Full width for inputs */
+      width: 82vw; /* Full width for inputs */
       padding: 12px;
       margin: 0 auto; /* Center-align the input */
       max-width: 90vh; /* Ensure no overflow */
@@ -190,7 +191,7 @@
   
     .dashboard .restaurant-wrapper {
       padding: 12px;
-      width: 90vh;
+      width: 81vw;
       margin-bottom: 10px; /* Reduced margin to prevent excess space between cards */
     }
   
@@ -219,8 +220,9 @@
     }
   
     .dashboard .select-input, .dashboard .search-input {
-      width: 100%;
+      width: 82vw;
       padding: 10px;
+      margin-left: -6px;
     }
   
     .dashboard .restaurant-wrapper {

@@ -73,6 +73,8 @@ const Page=()=>{
                 }
             </div>
             <div className="total-wrapper">
+            <div className="newflex">
+            <div className="flex-1">
                 <div className="block-1">
                 <div className="row">
                     <span>Food Charges : </span>
@@ -91,9 +93,13 @@ const Page=()=>{
                     <span>{total+DELIVERY_CHARGES+((total*TAX)/100)}</span>
                 </div>
                 </div>
+                </div>
+                <div className="flex-2">
                 <div className="block-2">
                     <button  onClick={orderNow}>Order Now</button>
                 </div>
+                </div>
+            </div>
             </div>
             <Footer />
         </div>
